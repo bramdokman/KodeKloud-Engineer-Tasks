@@ -90,4 +90,5 @@ spec:
     targetPort: 80
     nodePort: 30008
   selector:
-    name: pod-datacenter```
+    name: pod-datacenter
+```
