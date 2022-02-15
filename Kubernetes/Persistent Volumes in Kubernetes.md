@@ -14,7 +14,7 @@ Note: The kubectl utility on jump_host has been configured to work with the kube
 
 
 Solution:
-
+````
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -90,4 +90,4 @@ spec:
     targetPort: 80
     nodePort: 30008
   selector:
-    name: pod-datacenter
+    name: pod-datacenter```
