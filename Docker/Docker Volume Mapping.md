@@ -8,7 +8,11 @@ b. Create a new container with name apps from the image you just pulled.
 
 c. Map the host volume /opt/devops with container volume /tmp. There is an sample.txt file present on same server under /tmp; copy that file to /opt/devops. Also please keep the container in running state.
 
-```ssh banner@stapp03
+Solution:
+
+```
+
+ssh banner@stapp03
 
 docker run -d \
   --name=apps \
@@ -16,3 +20,5 @@ docker run -d \
   nginx:latest
 
 cp /tmp/sample.txt /opt/security
+
+```
