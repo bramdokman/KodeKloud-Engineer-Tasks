@@ -2,17 +2,17 @@ The Nautilus DevOps team is testing applications containerization, which issuppo
 
 
 
-a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too).
+a. On App Server 3 in Stratos DC pull nginx image (preferably latest tag but others should work too).
 
-b. Create a new container with name media from the image you just pulled.
+b. Create a new container with name apps from the image you just pulled.
 
-c. Map the host volume /opt/security with container volume /var. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state.
+c. Map the host volume /opt/devops with container volume /tmp. There is an sample.txt file present on same server under /tmp; copy that file to /opt/devops. Also please keep the container in running state.
 
-ssh steve@stapp02
-
-cp /tmp/sample.txt /opt/security
+```ssh banner@stapp03
 
 docker run -d \
-  --name=media \
-  --mount type=bind,source=/opt/security/,destination=/var \
+  --name=apps \
+  --mount type=bind,source=/opt/devops/,destination=/tmp \
   nginx:latest
+
+cp /tmp/sample.txt /opt/security
