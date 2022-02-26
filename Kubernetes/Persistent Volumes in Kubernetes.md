@@ -26,15 +26,7 @@ spec:
     - ReadWriteOnce
   storageClassName: manual
   hostPath: 
-    path: "/mnt/dba"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-            - node01    
+    path: "/mnt/devops" 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -46,38 +38,28 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
-
+      storage: 1Gi
 ---
 apiVersion: v1
-kind: Deployment
+kind: Pod
 metadata:
   name: pod-datacenter
   labels:
     app: web
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: web
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: web        
-    containers:
-      - name: container-datacenter
-        image: nginx:latest
-        ports:
-          - containerPort: 80
-            name: "http-server"
-        volumeMounts:
-          - mountPath: "/usr/share/nginx/html"
-            name: storage-datacenter
-        volumes:
-          - name: storage-datacenter
-            persistentVolumeClaim:
-              claimName: pvc-datacenter    
+spec:       
+  containers:
+    - name: container-datacenter
+      image: httpd:latest
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/var/www/html"
+          name: storage-datacenter
+  volumes:
+    - name: storage-datacenter
+      persistentVolumeClaim:
+        claimName: pvc-datacenter    
 ---
 apiVersion: v1
 kind: Service
