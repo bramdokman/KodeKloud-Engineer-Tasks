@@ -2,9 +2,9 @@ The Nautilus DevOps team is working on a Kubernetes template to deploy a web app
 
 
 
-Create a PersistentVolume named as pv-xfusion. Configure the spec as storage class should be manual, set capacity to 3Gi, set access mode to ReadWriteOnce, volume type should be hostPath and set path to /mnt/dba (this directory is already created, you might not be able to access it directly, so you need not to worry about it).
+Create a PersistentVolume named as pv-xfusion. Configure the spec as storage class should be manual, set capacity to 4Gi, set access mode to ReadWriteOnce, volume type should be hostPath and set path to /mnt/finance (this directory is already created, you might not be able to access it directly, so you need not to worry about it).
 
-Create a PersistentVolumeClaim named as pvc-xfusion. Configure the spec as storage class should be manual, request 1Gi of the storage, set access mode to ReadWriteOnce.
+Create a PersistentVolumeClaim named as pvc-xfusion. Configure the spec as storage class should be manual, request 3Gi of the storage, set access mode to ReadWriteOnce.
 
 Create a pod named as pod-xfusion, mount the persistent volume you created with claim name pvc-xfusion at document root of the web server, the container within the pod should be named as container-xfusion using image nginx with latest tag only (remember to mention the tag i.e nginx:latest).
 
@@ -18,53 +18,53 @@ Solution:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-datacenter
+  name: pv-xfusion
 spec:
   capacity:
-    storage: 3Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   storageClassName: manual
   hostPath: 
-    path: "/mnt/devops" 
+    path: "/mnt/finance" 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-datacenter
+  name: pvc-xfusion
 spec:
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-datacenter
+  name: pod-xfusion
   labels:
     app: web
 spec:       
   containers:
-    - name: container-datacenter
-      image: httpd:latest
+    - name: container-xfusion
+      image: nginx:latest
       ports:
         - containerPort: 80
           name: "http-server"
       volumeMounts:
-        - mountPath: "/var/www/html"
-          name: storage-datacenter
+        - mountPath: "/usr/share/nginx/html/"
+          name: storage-xfusion
   volumes:
-    - name: storage-datacenter
+    - name: storage-xfusion
       persistentVolumeClaim:
-        claimName: pvc-datacenter    
+        claimName: pvc-xfusion    
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-datacenter
+  name: web-xfusion
 spec:
   type: NodePort
   ports:
@@ -72,5 +72,5 @@ spec:
     targetPort: 80
     nodePort: 30008
   selector:
-    name: pod-datacenter
+    name: pod-xfusion
 ```
