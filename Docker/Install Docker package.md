@@ -1,6 +1,6 @@
 Last week the Nautilus DevOps team met with the application development team and decided to containerize several of their applications. The DevOps team wants to do some testing per the following:
 
-Install docker-ce and docker-compose packages on App Server 2.
+Install docker-ce and docker-compose packages on App Server 3.
 
 Start docker service.
 
@@ -8,13 +8,15 @@ Solution:
 
 ```
 
-ssh steve@stapp02
+ssh banner@stapp03
 
 sudo su
 
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
 yum install docker-ce docker-compose -y
+
+systemctl enable docker
 
 systemctl start docker
 
