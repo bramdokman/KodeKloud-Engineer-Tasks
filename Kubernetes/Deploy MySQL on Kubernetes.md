@@ -1,7 +1,5 @@
 A new MySQL server needs to be deployed on Kubernetes cluster. The Nautilus DevOps team was working on to gather the requirements. Recently they were able to finalize the requirements and shared them with the team members to start working on it. Below you can find the details:
 
-
-
 1.) Create a PersistentVolume mysql-pv, its capacity should be 250Mi, set other parameters as per your preference.
 
 2.) Create a PersistentVolumeClaim to request this PersistentVolume storage. Name it as mysql-pv-claim and request a 250Mi of storage. Set other parameters as per your preference.
@@ -51,8 +49,7 @@ spec:
   selector:
     app: mysql-app
     tier: mysql
-  
----
+  ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
