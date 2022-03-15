@@ -1,12 +1,10 @@
 The Nautilus DevOps team has put some data on all app servers in Stratos DC. jump host is configured as Puppet master server, and all app servers are already been configured as Puppet agent nodes. The team needs to update the content of some of the exiting files, as well as need to update their permissions etc. Please find below more details about the task:
 
+Create a Puppet programming file cluster.pp under /etc/puppetlabs/code/environments/production/manifests directory on the master node i.e Jump Server. Using puppet file resource, perform the below mentioned tasks.
 
+A file named beta.txt already exists under /opt/data directory on App Server 1.
 
-Create a Puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on the master node i.e Jump Server. Using puppet file resource, perform the below mentioned tasks.
-
-A file named blog.txt already exists under /opt/data directory on App Server 1.
-
-Add content Welcome to xFusionCorp Industries! in blog.txt file on App Server 1.
+Add content Welcome to xFusionCorp Industries! in beta.txt file on App Server 1.
 
 Set its permissions to 0655.
 
@@ -22,22 +20,23 @@ Solution:
 
 cd /etc/puppetlabs/code/environments/production/manifests
 
-vi official.pp
+vi cluster.pp
 
-puppet agent -tv on Appserver 1
+ssh tony@stapp01
+
+sudo su
+
+puppet agent -tv 
 
 ```
 
-Official.pp:
+Cluster.pp:
 
 ```
-node 'stapp01.stratos.xfusioncorp.com' {
-include file
-}
 
 class file {
 
-file { '/opt/data/blog.txt':
+file { '/opt/data/beta.txt':
 ensure => 'present',
 replace => 'yes', # this is the important property
 content => "Welcome to xFusionCorp Industries!",
@@ -45,4 +44,9 @@ mode => '0655',
 }
 
 }
+
+node 'stapp01.stratos.xfusioncorp.com' {
+include file
+}
+
 ```

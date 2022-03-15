@@ -1,12 +1,10 @@
 Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:
 
+Create a puppet programming file ecommerce.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks:
 
+Create a symbolic link through puppet programming code. The source path should be /opt/devops and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2.
 
-Create a puppet programming file news.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks:
-
-Create a symbolic link through puppet programming code. The source path should be /opt/sysops and destination path should be /var/www/html on Puppet agents 3 i.e on App Servers 3.
-
-Create a blank file blog.txt under /opt/sysops directory on puppet agent 3 nodes i.e on App Servers 3.
+Create a blank file story.txt under /opt/devops directory on puppet agent 2 nodes i.e on App Servers 2.
 
 Notes: :- Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test.
 
@@ -20,7 +18,7 @@ Solution:
 
 cd /etc/puppetlabs/code/environments/production/manifests
 
-vi news.pp
+vi ecommerce.pp
 
 ```
 
@@ -30,7 +28,7 @@ class symlink {
 
   # First create a symlink to /var/www/html
 
-  file { '/opt/sysops':
+  file { '/opt/devops':
 
     ensure => 'link',
 
@@ -38,9 +36,9 @@ class symlink {
 
   }
 
-   # Now create media.txt under /opt/sysops
+   # Now create story.txt under /opt/devops
 
-  file { '/opt/sysops/blog.txt':
+  file { '/opt/devops/story.txt':
 
     ensure => 'present',
 
@@ -57,7 +55,9 @@ node 'stapp01.stratos.xfusioncorp.com', 'stapp02.stratos.xfusioncorp.com', 'stap
 ```
 
 ```
-ssh banner@stapp03
+ssh steve@stapp02
+
+sudo su
 
 puppet agent -tv
 
