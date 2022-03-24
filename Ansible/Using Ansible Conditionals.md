@@ -4,13 +4,11 @@ An inventory file is already placed under /home/thor/ansible directory on jump h
 
 Create a playbook /home/thor/ansible/playbook.yml and make sure to use Ansible's when conditionals statements to perform the below given tasks.
 
+Copy blog.txt file present under /usr/src/itadmin directory on jump host to App Server 1 under /opt/itadmin directory. Its user and group owner must be user tony and its permissions must be 0644 .
 
+Copy story.txt file present under /usr/src/itadmin directory on jump host to App Server 2 under /opt/itadmin directory. Its user and group owner must be user steve and its permissions must be 0644 .
 
-Copy blog.txt file present under /usr/src/sysops directory on jump host to App Server 1 under /opt/sysops directory. Its user and group owner must be user tony and its permissions must be 0777 .
-
-Copy story.txt file present under /usr/src/sysops directory on jump host to App Server 2 under /opt/sysops directory. Its user and group owner must be user steve and its permissions must be 0777 .
-
-Copy media.txt file present under /usr/src/sysops directory on jump host to App Server 3 under /opt/sysops directory. Its user and group owner must be user banner and its permissions must be 0777 .
+Copy media.txt file present under /usr/src/itadmin directory on jump host to App Server 3 under /opt/itadmin directory. Its user and group owner must be user banner and its permissions must be 0644 .
 
 NOTE: You can use ansible_nodename variable from gathered facts with when condition. Additionally, please make sure you are running the play for all hosts i.e use - hosts: all.
 
@@ -24,27 +22,27 @@ Note: Validation will try to run the playbook using command ansible-playbook -i 
   tasks:
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
-        src: /usr/src/sysops/blog.txt
-        dest: /opt/sysops/blog.txt
+        src: /usr/src/itadmin/blog.txt
+        dest: /opt/itadmin/blog.txt
         owner: tony
         group: tony
-        mode: '0777'
+        mode: '0644'
       when: inventory_hostname == "stapp01" 
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
-        src: /usr/src/sysops/story.txt
-        dest: /opt/sysops/story.txt
+        src: /usr/src/itadmin/story.txt
+        dest: /opt/itadmin/story.txt
         owner: steve
         group: steve
-        mode: '0777'
+        mode: '0644'
       when: inventory_hostname == "stapp02"   
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
-        src: /usr/src/sysops/media.txt
-        dest: /opt/sysops/media.txt
+        src: /usr/src/itadmin/media.txt
+        dest: /opt/itadmin/media.txt
         owner: banner
         group: banner
-        mode: '0777'
+        mode: '0644'
       when: inventory_hostname == "stapp03"
 
 ```
