@@ -22,6 +22,13 @@ class KubernetesValidator:
         'Secret': ['apiVersion', 'kind', 'metadata', 'data'],
         'PersistentVolume': ['apiVersion', 'kind', 'metadata', 'spec'],
         'PersistentVolumeClaim': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'Pod': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'Namespace': ['apiVersion', 'kind', 'metadata'],
+        'ReplicationController': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'Ingress': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'DaemonSet': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'StatefulSet': ['apiVersion', 'kind', 'metadata', 'spec'],
+        'Job': ['apiVersion', 'kind', 'metadata', 'spec'],
     }
 
     API_VERSIONS = {
@@ -32,6 +39,13 @@ class KubernetesValidator:
         'Secret': ['v1'],
         'PersistentVolume': ['v1'],
         'PersistentVolumeClaim': ['v1'],
+        'Pod': ['v1'],
+        'Namespace': ['v1'],
+        'ReplicationController': ['v1'],
+        'Ingress': ['networking.k8s.io/v1', 'networking.k8s.io/v1beta1'],
+        'DaemonSet': ['apps/v1'],
+        'StatefulSet': ['apps/v1'],
+        'Job': ['batch/v1'],
     }
 
     @staticmethod
