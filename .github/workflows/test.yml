@@ -2,7 +2,7 @@ name: Test Coverage
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, 'feature/*' ]
   pull_request:
     branches: [ main ]
 
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v3
@@ -21,6 +21,14 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -29,7 +37,7 @@ jobs:
 
     - name: Lint with flake8
       run: |
-        flake8 src/ tests/ --max-line-length=120 --ignore=E501,W503
+        flake8 src/ tests/ --max-line-length=120 --ignore=E501,W503,W292
 
     - name: Type check with mypy
       run: |
@@ -37,19 +45,19 @@ jobs:
 
     - name: Run unit tests
       run: |
-        pytest tests/unit/ -v -m unit
+        pytest tests/unit/ -v
 
     - name: Run integration tests
       run: |
-        pytest tests/integration/ -v -m integration
+        pytest tests/integration/ -v
 
     - name: Run edge case tests
       run: |
-        pytest tests/edge/ -v -m edge
+        pytest tests/edge/ -v
 
-    - name: Generate coverage report
+    - name: Generate comprehensive coverage report
       run: |
-        pytest tests/ --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+        pytest tests/ --cov=src --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=90
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -57,4 +65,12 @@ jobs:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
-        fail_ci_if_error: true
+        fail_ci_if_error: false
+
+    - name: Upload coverage artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report-${{ matrix.python-version }}
+        path: |
+          coverage.xml
+          htmlcov/

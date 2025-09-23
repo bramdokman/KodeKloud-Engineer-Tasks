@@ -211,6 +211,11 @@ def calculate_similarity(text1: str, text2: str) -> float:
     text1_normalized = normalize_whitespace(text1.lower())
     text2_normalized = normalize_whitespace(text2.lower())
 
+    # Handle empty strings - two empty strings are considered identical
+    if not text1_normalized and not text2_normalized:
+        return 1.0
+
+    # One empty and one non-empty string have no similarity
     if not text1_normalized or not text2_normalized:
         return 0.0
 

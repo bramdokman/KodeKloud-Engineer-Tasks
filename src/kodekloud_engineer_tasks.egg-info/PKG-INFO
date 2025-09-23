@@ -1,0 +1,41 @@
+Metadata-Version: 2.4
+Name: kodekloud-engineer-tasks
+Version: 1.0.0
+Summary: Testing framework for KodeKloud Engineer Tasks
+Author: KodeKloud
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pytest>=7.4.3
+Requires-Dist: pytest-cov>=4.1.0
+Requires-Dist: pytest-mock>=3.12.0
+Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: kubernetes>=28.1.0
+Requires-Dist: markdown>=3.5.1
+Requires-Dist: jsonschema>=4.20.0
+Provides-Extra: dev
+Requires-Dist: black>=23.11.0; extra == "dev"
+Requires-Dist: flake8>=6.1.0; extra == "dev"
+Requires-Dist: mypy>=1.7.1; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# KodeKloud Engineer Tasks
+
+www.kodekloud-engineer.com
+
+Solutions for the Tasks assigned to you as DevOps engineer
