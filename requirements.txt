@@ -2,7 +2,7 @@ pytest==7.4.4
 pytest-cov==4.1.0
 pytest-mock==3.15.1
 pyyaml==6.0.3
-kubernetes==28.1.0
+kubernetes==35.0.0
 markdown==3.10.2
 jsonschema==4.20.0
 black==23.12.1
